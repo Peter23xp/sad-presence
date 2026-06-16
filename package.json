@@ -74,5 +74,9 @@
     "electron": "^42.4.0",
     "electron-builder": "^26.15.3",
     "wait-on": "^9.0.10"
+  },
+  "author": {
+    "name": "SAD-International",
+    "email": "contact@sad-international.org"
   }
 }
