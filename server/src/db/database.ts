@@ -1,8 +1,11 @@
 import Database from 'better-sqlite3';
 import path from 'path';
 
-// Define the path to the database file
-const dbPath = path.resolve(__dirname, 'sad_presence.db');
+// En production Electron, DB_PATH est défini par le main process (userData)
+// En dev/serveur autonome, la DB est à côté du fichier compilé
+const dbPath = process.env.DB_PATH
+  ? path.resolve(process.env.DB_PATH)
+  : path.resolve(__dirname, 'sad_presence.db');
 
 // Initialize the database
 const db: import('better-sqlite3').Database = new Database(dbPath, { verbose: console.log });

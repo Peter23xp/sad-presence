@@ -1,102 +1,150 @@
 const { app, BrowserWindow, shell, dialog } = require('electron');
 const path = require('path');
-const { spawn } = require('child_process');
 const http = require('http');
 
-let mainWindow;
-let serverProcess;
+// ── Instance unique ─────────────────────────────────────────────────────────
+const gotLock = app.requestSingleInstanceLock();
+if (!gotLock) {
+  app.quit();
+  process.exit(0);
+}
+
+let mainWindow = null;
+let serverStarted = false;
 
 const isDev = !app.isPackaged;
 const SERVER_PORT = 3001;
-const CLIENT_PORT = 5173;
 
-function waitForServer(url, timeout = 30000) {
+// ── Attendre que le serveur réponde ─────────────────────────────────────────
+function waitForServer(timeout = 20000) {
   return new Promise((resolve, reject) => {
     const start = Date.now();
     const check = () => {
-      http.get(url, (res) => {
-        if (res.statusCode < 500) resolve();
-        else setTimeout(check, 500);
-      }).on('error', () => {
-        if (Date.now() - start > timeout) reject(new Error('Server timeout'));
-        else setTimeout(check, 500);
+      const req = http.get(`http://localhost:${SERVER_PORT}/api/health`, (res) => {
+        if (res.statusCode < 500) return resolve();
+        setTimeout(check, 600);
       });
+      req.on('error', () => {
+        if (Date.now() - start > timeout) return reject(new Error('Le serveur n\'a pas démarré à temps.'));
+        setTimeout(check, 600);
+      });
+      req.setTimeout(1000, () => { req.destroy(); setTimeout(check, 600); });
     };
     check();
   });
 }
 
+// ── Démarrer le serveur Express intégré ─────────────────────────────────────
 function startServer() {
-  if (isDev) return Promise.resolve(); // en dev, le serveur tourne déjà
+  if (isDev) return Promise.resolve(); // en dev le serveur tourne séparément
+  if (serverStarted) return waitForServer();
+  serverStarted = true;
 
-  const serverPath = path.join(process.resourcesPath, 'server');
-  const nodePath = process.execPath; // node bundlé avec electron
+  // En production : charger le serveur compilé directement dans le process
+  // (pas de spawn — évite le problème "introuvable" avec process.execPath)
+  const resourcesPath = process.resourcesPath;
+  const serverEntry = path.join(resourcesPath, 'server', 'dist', 'index.js');
 
-  serverProcess = spawn(nodePath, [path.join(serverPath, 'dist', 'index.js')], {
-    cwd: serverPath,
-    env: {
-      ...process.env,
-      NODE_ENV: 'production',
-      PORT: String(SERVER_PORT),
-      DB_PATH: path.join(app.getPath('userData'), 'sad_presence.db'),
-    },
-    stdio: 'pipe',
-  });
+  // Les node_modules sont dans resources/node_modules (monorepo)
+  // On les ajoute au NODE_PATH pour que le require du serveur les trouve
+  const nodeModulesPath = path.join(resourcesPath, 'node_modules');
+  process.env.NODE_PATH = nodeModulesPath;
+  require('module').Module._initPaths();
 
-  serverProcess.stdout.on('data', (d) => console.log('[server]', d.toString()));
-  serverProcess.stderr.on('data', (d) => console.error('[server]', d.toString()));
+  // Variables d'env pour le serveur
+  process.env.NODE_ENV = 'production';
+  process.env.PORT = String(SERVER_PORT);
+  process.env.DB_PATH = path.join(app.getPath('userData'), 'sad_presence.db');
 
-  return waitForServer(`http://localhost:${SERVER_PORT}/api/health`);
+  try {
+    require(serverEntry);
+  } catch (err) {
+    return Promise.reject(new Error(`Erreur démarrage serveur: ${err.message}\n${err.stack}`));
+  }
+
+  return waitForServer();
 }
 
+// ── Créer la fenêtre principale ──────────────────────────────────────────────
 async function createWindow() {
+  if (mainWindow) {
+    mainWindow.focus();
+    return;
+  }
+
   mainWindow = new BrowserWindow({
     width: 1280,
     height: 800,
-    minWidth: 900,
+    minWidth: 960,
     minHeight: 600,
+    show: false, // on attend le 'ready-to-show'
     icon: path.join(__dirname, 'icon.ico'),
     webPreferences: {
       nodeIntegration: false,
       contextIsolation: true,
+      sandbox: true,
     },
-    titleBarStyle: 'default',
     title: 'SAD-International — Gestion de Présence',
+    backgroundColor: '#f8fafc',
   });
 
-  // Ouvrir les liens externes dans le navigateur système
+  // Afficher seulement quand le rendu est prêt (évite l'écran blanc)
+  mainWindow.once('ready-to-show', () => {
+    mainWindow.show();
+    mainWindow.focus();
+  });
+
+  mainWindow.on('closed', () => {
+    mainWindow = null;
+  });
+
+  // Ouvrir les liens http/https externes dans le navigateur système
   mainWindow.webContents.setWindowOpenHandler(({ url }) => {
+    if (url.startsWith('http://localhost') || url.startsWith('https://localhost')) {
+      return { action: 'allow' };
+    }
     shell.openExternal(url);
     return { action: 'deny' };
   });
 
   if (isDev) {
-    await mainWindow.loadURL(`http://localhost:${CLIENT_PORT}`);
+    await mainWindow.loadURL(`http://localhost:5173`);
     mainWindow.webContents.openDevTools();
   } else {
-    await mainWindow.loadFile(path.join(__dirname, '..', 'client', 'dist', 'index.html'));
+    // Production : charger le front compilé
+    const indexPath = path.join(__dirname, '..', 'client', 'dist', 'index.html');
+    await mainWindow.loadFile(indexPath);
   }
 }
 
+// ── Événements app ───────────────────────────────────────────────────────────
 app.whenReady().then(async () => {
   try {
     await startServer();
     await createWindow();
   } catch (err) {
-    dialog.showErrorBox('Erreur de démarrage', String(err));
+    dialog.showErrorBox('SAD-Presence — Erreur', String(err.message || err));
     app.quit();
   }
 });
 
+// Si une deuxième instance essaie de s'ouvrir : focus sur la fenêtre existante
+app.on('second-instance', () => {
+  if (mainWindow) {
+    if (mainWindow.isMinimized()) mainWindow.restore();
+    mainWindow.focus();
+  }
+});
+
 app.on('window-all-closed', () => {
-  if (serverProcess) serverProcess.kill();
-  if (process.platform !== 'darwin') app.quit();
+  app.quit();
 });
 
 app.on('activate', () => {
-  if (BrowserWindow.getAllWindows().length === 0) createWindow();
+  if (mainWindow === null) createWindow();
 });
 
+// Nettoyage propre à la fermeture
 app.on('before-quit', () => {
-  if (serverProcess) serverProcess.kill();
+  // Le serveur tourne dans le même process — il s'arrête automatiquement
 });

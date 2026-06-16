@@ -25,18 +25,22 @@
     },
     "files": [
       "electron/**/*",
-      "client/dist/**/*",
-      "server/dist/**/*",
-      "server/package.json",
-      "node_modules/**/*"
+      "client/dist/**/*"
     ],
     "extraResources": [
       {
-        "from": "server",
-        "to": "server",
+        "from": "server/dist",
+        "to": "server/dist"
+      },
+      {
+        "from": "node_modules",
+        "to": "node_modules",
         "filter": [
-          "dist/**/*",
-          "package.json"
+          "better-sqlite3/**",
+          "express/**",
+          "cors/**",
+          "bcryptjs/**",
+          "jsonwebtoken/**"
         ]
       }
     ],
