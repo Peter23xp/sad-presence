@@ -110,7 +110,8 @@ async function createWindow() {
     await mainWindow.loadURL(`http://localhost:5173`);
     mainWindow.webContents.openDevTools();
   } else {
-    // Production : charger le front compilé
+    // Dans l'ASAR packagé, __dirname = resources/app.asar/electron
+    // client/dist est dans resources/app.asar/client/dist
     const indexPath = path.join(__dirname, '..', 'client', 'dist', 'index.html');
     await mainWindow.loadFile(indexPath);
   }

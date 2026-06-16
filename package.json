@@ -23,9 +23,11 @@
     "directories": {
       "output": "dist-electron"
     },
+    "asar": false,
     "files": [
       "electron/**/*",
-      "client/dist/**/*"
+      "client/dist/**/*",
+      "!node_modules"
     ],
     "extraResources": [
       {
