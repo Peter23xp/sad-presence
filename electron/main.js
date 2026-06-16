@@ -54,6 +54,8 @@ function startServer() {
   process.env.NODE_ENV = 'production';
   process.env.PORT = String(SERVER_PORT);
   process.env.DB_PATH = path.join(app.getPath('userData'), 'sad_presence.db');
+  // Le serveur sert aussi le frontend React
+  process.env.CLIENT_DIST_PATH = path.join(app.getAppPath(), 'client', 'dist');
 
   try {
     require(serverEntry);
@@ -110,10 +112,9 @@ async function createWindow() {
     await mainWindow.loadURL(`http://localhost:5173`);
     mainWindow.webContents.openDevTools();
   } else {
-    // Dans l'ASAR packagé, __dirname = resources/app.asar/electron
-    // client/dist est dans resources/app.asar/client/dist
-    const indexPath = path.join(__dirname, '..', 'client', 'dist', 'index.html');
-    await mainWindow.loadFile(indexPath);
+    // En production : tout passe par le serveur Express (API + frontend)
+    // Ça résout les appels /api/* qui sinon pointent vers file:///api/*
+    await mainWindow.loadURL(`http://localhost:${SERVER_PORT}`);
   }
 }
 

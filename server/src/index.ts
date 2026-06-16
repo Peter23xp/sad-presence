@@ -1,6 +1,8 @@
 import express from 'express'
 import cors from 'cors'
 import os from 'os'
+import path from 'path'
+import fs from 'fs'
 import './db/database'
 
 import employesRoutes from './routes/employes'
@@ -72,6 +74,17 @@ app.use((err: any, req: express.Request, res: express.Response, next: express.Ne
     code: status
   })
 })
+
+// En production Electron : servir le frontend React compilé
+// CLIENT_DIST_PATH est défini par electron/main.js
+const clientDist = process.env.CLIENT_DIST_PATH
+if (clientDist && fs.existsSync(clientDist)) {
+  app.use(express.static(clientDist))
+  // Toutes les routes non-API → index.html (React Router)
+  app.get('*', (_req, res) => {
+    res.sendFile(path.join(clientDist, 'index.html'))
+  })
+}
 
 async function start() {
   app.listen(PORT, () => {
