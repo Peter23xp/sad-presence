@@ -33,15 +33,8 @@
         "to": "server/dist"
       },
       {
-        "from": "node_modules",
-        "to": "node_modules",
-        "filter": [
-          "better-sqlite3/**",
-          "express/**",
-          "cors/**",
-          "bcryptjs/**",
-          "jsonwebtoken/**"
-        ]
+        "from": "server/node_modules",
+        "to": "server/node_modules"
       }
     ],
     "win": {

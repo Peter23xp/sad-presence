@@ -45,9 +45,8 @@ function startServer() {
   const resourcesPath = process.resourcesPath;
   const serverEntry = path.join(resourcesPath, 'server', 'dist', 'index.js');
 
-  // Les node_modules sont dans resources/node_modules (monorepo)
-  // On les ajoute au NODE_PATH pour que le require du serveur les trouve
-  const nodeModulesPath = path.join(resourcesPath, 'node_modules');
+  // Les node_modules du serveur sont dans resources/server/node_modules
+  const nodeModulesPath = path.join(resourcesPath, 'server', 'node_modules');
   process.env.NODE_PATH = nodeModulesPath;
   require('module').Module._initPaths();
 
