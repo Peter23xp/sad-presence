@@ -34,7 +34,11 @@ const App: React.FC = () => {
   if (!isAuthenticated) {
     return (
       <BrowserRouter>
-        <Login onLogin={login} />
+        <ToastContainer />
+        <Routes>
+          <Route path="/scanner" element={<Scanner />} />
+          <Route path="*" element={<Login onLogin={login} />} />
+        </Routes>
       </BrowserRouter>
     );
   }

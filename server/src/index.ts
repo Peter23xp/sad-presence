@@ -3,6 +3,8 @@ import cors from 'cors'
 import os from 'os'
 import path from 'path'
 import fs from 'fs'
+import https from 'https'
+import selfsigned from 'selfsigned'
 import './db/database'
 
 import employesRoutes from './routes/employes'
@@ -90,6 +92,20 @@ async function start() {
   app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`)
   })
+  
+  try {
+    const attrs = [{ name: 'commonName', value: 'sad-presence' }]
+    const pems = await selfsigned.generate(attrs)
+    
+    https.createServer({
+      key: pems.private,
+      cert: pems.cert
+    }, app).listen(PORT + 1, '0.0.0.0', () => {
+      console.log(`HTTPS Server running on https://0.0.0.0:${PORT + 1}`)
+    })
+  } catch (err) {
+    console.error('Erreur lors de la création du serveur HTTPS:', err)
+  }
 }
 
 start()

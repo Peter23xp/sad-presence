@@ -32,10 +32,13 @@ export const Scanner: React.FC = () => {
     fetch('/api/network-info')
       .then(r => r.json())
       .then(data => {
-        setScannerUrl(`https://${data.ip}:${window.location.port}/scanner`);
+        // Le serveur HTTPS tourne sur le port + 1 (ex: 3002) pour l'accès caméra
+        const port = window.location.port ? parseInt(window.location.port, 10) + 1 : 3002;
+        setScannerUrl(`https://${data.ip}:${port}/scanner`);
       })
       .catch(() => {
-        setScannerUrl(`https://${window.location.hostname}:${window.location.port}/scanner`);
+        const port = window.location.port ? parseInt(window.location.port, 10) + 1 : 3002;
+        setScannerUrl(`https://${window.location.hostname}:${port}/scanner`);
       });
   }, []);
 
