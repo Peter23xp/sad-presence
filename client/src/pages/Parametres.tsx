@@ -182,7 +182,7 @@ export const Parametres: React.FC<ParametresProps> = ({ onLogout: _onLogout }) =
     <div className="p-4 sm:p-8 max-w-4xl mx-auto min-h-screen">
       <div className="flex justify-between items-end mb-8">
         <div>
-          <h1 className="text-2xl font-bold text-[#1e40af]">Paramètres</h1>
+          <h1 className="text-2xl font-bold text-black">Paramètres</h1>
           <p className="text-gray-500">Configuration générale du système</p>
         </div>
         <div className="h-8 flex items-center">
@@ -289,7 +289,7 @@ export const Parametres: React.FC<ParametresProps> = ({ onLogout: _onLogout }) =
               </p>
             )}
             <button type="submit" disabled={pwdLoading}
-              className="flex items-center gap-2 px-5 py-2.5 bg-[#1e40af] text-white rounded-lg font-medium hover:bg-blue-800 transition disabled:opacity-50 text-sm">
+              className="flex items-center gap-2 px-5 py-2.5 bg-[#07bb20] text-white rounded-lg font-medium hover:bg-[#069e1b] transition disabled:opacity-50 text-sm">
               <Lock size={15} /> {pwdLoading ? 'Modification...' : 'Modifier le mot de passe'}
             </button>
           </form>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Eye, EyeOff, ShieldCheck, Download, KeyRound, ArrowLeft } from 'lucide-react';
+import { Eye, EyeOff, Download, KeyRound, ArrowLeft } from 'lucide-react';
 
 type Mode = 'login' | 'setup' | 'recover';
 
@@ -118,11 +118,11 @@ export const Login: React.FC<LoginProps> = ({ onLogin }) => {
   // Ecran affiché après setup : affiche la clé à télécharger
   if (recoveryKey) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-900 to-blue-950 flex items-center justify-center p-4">
+      <div className="min-h-screen bg-gradient-to-br from-slate-900 to-green-950 flex items-center justify-center p-4">
         <div className="bg-white rounded-3xl shadow-2xl w-full max-w-md p-8">
           <div className="text-center mb-6">
-            <div className="inline-flex items-center justify-center w-16 h-16 bg-green-100 rounded-2xl mb-4">
-              <ShieldCheck size={32} className="text-green-600" />
+            <div className="inline-flex items-center justify-center w-20 h-20 bg-white border border-gray-100 rounded-2xl mb-4 shadow-sm p-2">
+              <img src="/logo.png" alt="SAD Logo" className="w-full h-full object-contain" />
             </div>
             <h2 className="text-2xl font-bold text-gray-900">Compte créé !</h2>
             <p className="text-gray-500 mt-2 text-sm">Téléchargez votre clé de récupération avant de continuer</p>
@@ -141,7 +141,7 @@ export const Login: React.FC<LoginProps> = ({ onLogin }) => {
           <button
             onClick={() => downloadRecoveryKey(recoveryKey)}
             className={`w-full flex items-center justify-center gap-2 py-3 rounded-xl font-semibold mb-4 transition ${
-              keyDownloaded ? 'bg-green-600 text-white' : 'bg-[#1e40af] text-white hover:bg-blue-800'
+              keyDownloaded ? 'bg-green-600 text-white' : 'bg-[#07bb20] text-white hover:bg-[#069e1b]'
             }`}
           >
             <Download size={18} />
@@ -170,16 +170,16 @@ export const Login: React.FC<LoginProps> = ({ onLogin }) => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 to-blue-950 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 to-green-950 flex items-center justify-center p-4">
       <div className="bg-white rounded-3xl shadow-2xl w-full max-w-md overflow-hidden">
 
         {/* Header */}
-        <div className="bg-[#1e40af] px-8 py-8 text-center">
-          <div className="inline-flex items-center justify-center w-14 h-14 bg-white/20 rounded-2xl mb-4">
-            <ShieldCheck size={28} className="text-white" />
+        <div className="bg-[#07bb20] px-8 py-8 text-center">
+          <div className="inline-flex items-center justify-center w-20 h-20 bg-white rounded-2xl mb-4 shadow-lg overflow-hidden p-2">
+            <img src="/logo.png" alt="SAD Logo" className="w-full h-full object-contain" />
           </div>
           <h1 className="text-2xl font-black text-white tracking-tight">SAD-International</h1>
-          <p className="text-blue-200 text-sm mt-1">Système de Gestion de Présence</p>
+          <p className="text-black text-sm mt-1 font-medium">Système de Gestion de Présence</p>
         </div>
 
         <div className="p-8">
@@ -213,11 +213,11 @@ export const Login: React.FC<LoginProps> = ({ onLogin }) => {
                   </div>
                 </div>
                 {error && <p className="text-red-500 text-sm bg-red-50 px-3 py-2 rounded-lg">{error}</p>}
-                <button type="submit" disabled={loading} className="w-full bg-[#1e40af] text-white py-3 rounded-xl font-semibold hover:bg-blue-800 transition disabled:opacity-50">
+                <button type="submit" disabled={loading} className="w-full bg-[#07bb20] text-white py-3 rounded-xl font-semibold hover:bg-[#069e1b] transition disabled:opacity-50">
                   {loading ? 'Connexion...' : 'Se connecter'}
                 </button>
               </form>
-              <button onClick={() => setMode('recover')} className="mt-4 text-sm text-gray-400 hover:text-[#1e40af] transition w-full text-center">
+              <button onClick={() => setMode('recover')} className="mt-4 text-sm text-gray-400 hover:text-black transition w-full text-center">
                 Mot de passe oublié ? Utiliser la clé de récupération
               </button>
             </>
@@ -259,7 +259,7 @@ export const Login: React.FC<LoginProps> = ({ onLogin }) => {
                   />
                 </div>
                 {error && <p className="text-red-500 text-sm bg-red-50 px-3 py-2 rounded-lg">{error}</p>}
-                <button type="submit" disabled={loading} className="w-full bg-[#1e40af] text-white py-3 rounded-xl font-semibold hover:bg-blue-800 transition disabled:opacity-50">
+                <button type="submit" disabled={loading} className="w-full bg-[#07bb20] text-white py-3 rounded-xl font-semibold hover:bg-[#069e1b] transition disabled:opacity-50">
                   {loading ? 'Création...' : 'Créer le compte'}
                 </button>
               </form>

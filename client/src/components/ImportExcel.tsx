@@ -72,7 +72,7 @@ export const ImportExcel: React.FC = () => {
   return (
     <div className="bg-white p-6 rounded-lg shadow-sm">
       <div className="flex justify-between items-center mb-6">
-        <h2 className="text-xl font-semibold text-[#1e40af]">Importation Excel</h2>
+        <h2 className="text-xl font-semibold text-black">Importation Excel</h2>
         <button 
           onClick={generateTemplate}
           className="flex items-center text-sm text-[#16a34a] border border-[#16a34a] px-3 py-1.5 rounded-md hover:bg-green-50 transition-colors"
@@ -85,7 +85,7 @@ export const ImportExcel: React.FC = () => {
       {employes.length === 0 ? (
         <div 
           className={`border-2 border-dashed rounded-lg p-12 text-center transition-colors ${
-            isDragging ? 'border-[#1e40af] bg-blue-50' : 'border-gray-300 hover:border-[#1e40af]'
+            isDragging ? 'border-[#07bb20] bg-green-50' : 'border-gray-300 hover:border-[#07bb20]'
           }`}
           onDragOver={onDragOver}
           onDragLeave={onDragLeave}
@@ -111,16 +111,16 @@ export const ImportExcel: React.FC = () => {
           />
           <button 
             onClick={() => fileInputRef.current?.click()}
-            className="bg-[#1e40af] text-white px-6 py-2 rounded-md hover:bg-blue-900 transition-colors font-medium"
+            className="bg-[#07bb20] text-white px-6 py-2 rounded-md hover:bg-[#058a17] transition-colors font-medium"
           >
             Parcourir
           </button>
         </div>
       ) : (
         <div className="space-y-4">
-          <div className="flex justify-between items-center bg-blue-50 p-4 rounded-md">
+          <div className="flex justify-between items-center bg-green-50 p-4 rounded-md">
             <div>
-              <p className="font-medium text-[#1e40af]">
+              <p className="font-medium text-black">
                 Résumé de l'analyse
               </p>
               <p className="text-sm text-gray-600 mt-1">
@@ -137,7 +137,7 @@ export const ImportExcel: React.FC = () => {
               <button 
                 onClick={handleImport}
                 disabled={isImporting || validesCount === 0}
-                className="bg-[#1e40af] text-white px-6 py-2 rounded-md hover:bg-blue-900 transition-colors font-medium disabled:opacity-50 flex items-center"
+                className="bg-[#07bb20] text-white px-6 py-2 rounded-md hover:bg-[#058a17] transition-colors font-medium disabled:opacity-50 flex items-center"
               >
                 {isImporting ? 'Importation...' : `Importer ${validesCount} employés`}
               </button>

@@ -6,8 +6,8 @@ interface AlertesData {
   retardataires: any[];
 }
 
-export const AlertesList: React.FC<{ data: AlertesData | null }> = ({ data }) => {
-  if (!data) return null;
+export const AlertesList: React.FC<{ data: AlertesData | null | any }> = ({ data }) => {
+  if (!data || !data.absents || !data.retardataires) return null;
 
   return (
     <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden flex flex-col h-full">
@@ -27,7 +27,7 @@ export const AlertesList: React.FC<{ data: AlertesData | null }> = ({ data }) =>
           </div>
         ) : (
           <div className="space-y-4">
-            {data.retardataires.map((r, i) => {
+            {data.retardataires.map((r: any, i: number) => {
               const arrivee = new Date(r.heure_arrivee).toLocaleTimeString('fr-CD', { hour: '2-digit', minute: '2-digit' });
               return (
                 <div key={`retard-${i}`} className="flex items-start gap-3 p-3 bg-orange-50 rounded-xl border border-orange-100 transition-all hover:bg-orange-100/50">
@@ -44,7 +44,7 @@ export const AlertesList: React.FC<{ data: AlertesData | null }> = ({ data }) =>
               );
             })}
             
-            {data.absents.map((a, i) => (
+            {data.absents.map((a: any, i: number) => (
               <div key={`absent-${i}`} className="flex items-start gap-3 p-3 bg-red-50 rounded-xl border border-red-100 transition-all hover:bg-red-100/50">
                 <div className="p-2 bg-red-100 rounded-lg text-red-600 shrink-0">
                   <AlertCircle className="w-5 h-5" />

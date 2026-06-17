@@ -136,7 +136,7 @@ export const Scanner: React.FC = () => {
               </div>
               <button
                 onClick={isScanning ? stopScan : startScan}
-                className={`p-3 rounded-full ${isScanning ? 'bg-white/20' : 'bg-[#1e40af]'}`}
+                className={`p-3 rounded-full ${isScanning ? 'bg-white/20' : 'bg-[#07bb20]'}`}
               >
                 {isScanning ? <CameraOff size={20} className="text-white" /> : <Camera size={20} className="text-white" />}
               </button>
@@ -156,7 +156,7 @@ export const Scanner: React.FC = () => {
               <button
                 type="submit"
                 disabled={!manualCode.trim()}
-                className="bg-[#1e40af] text-white px-5 py-3 rounded-xl font-medium disabled:opacity-40"
+                className="bg-[#07bb20] text-white px-5 py-3 rounded-xl font-medium disabled:opacity-40"
               >
                 OK
               </button>
@@ -181,7 +181,7 @@ export const Scanner: React.FC = () => {
             <div className="text-center">
               <Camera size={48} className="text-white/30 mx-auto mb-4" />
               <p className="text-white/60 text-sm">{error}</p>
-              <button onClick={startScan} className="mt-4 bg-[#1e40af] text-white px-6 py-3 rounded-xl font-medium">
+              <button onClick={startScan} className="mt-4 bg-[#07bb20] text-white px-6 py-3 rounded-xl font-medium">
                 Réessayer
               </button>
             </div>
@@ -201,11 +201,11 @@ export const Scanner: React.FC = () => {
 
   // --- DESKTOP VIEW: QR Code display ---
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 flex items-center justify-center p-6 relative">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-green-50 flex items-center justify-center p-6 relative">
       {/* Bouton retour */}
       <button
         onClick={() => navigate('/dashboard')}
-        className="absolute top-6 left-6 flex items-center gap-2 px-4 py-2.5 bg-white border border-gray-200 rounded-xl text-gray-600 hover:text-[#1e40af] hover:border-[#1e40af] transition-colors shadow-sm font-medium text-sm"
+        className="absolute top-6 left-6 flex items-center gap-2 px-4 py-2.5 bg-white border border-gray-200 rounded-xl text-gray-600 hover:text-black hover:border-[#07bb20] transition-colors shadow-sm font-medium text-sm"
       >
         <ArrowLeft size={18} />
         Tableau de bord
@@ -214,7 +214,7 @@ export const Scanner: React.FC = () => {
       <div className="w-full max-w-lg">
         {/* Header */}
         <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-16 h-16 bg-[#1e40af] rounded-2xl shadow-lg shadow-blue-200 mb-4">
+          <div className="inline-flex items-center justify-center w-16 h-16 bg-[#07bb20] rounded-2xl shadow-lg shadow-green-200 mb-4">
             <Smartphone size={32} className="text-white" />
           </div>
           <h1 className="text-3xl font-bold text-gray-900">Pointage</h1>
@@ -249,20 +249,20 @@ export const Scanner: React.FC = () => {
           {/* Instructions */}
           <div className="mt-6 space-y-3">
             <div className="flex items-start gap-3 text-sm">
-              <div className="w-6 h-6 bg-blue-100 rounded-full flex items-center justify-center shrink-0 mt-0.5">
-                <span className="text-[#1e40af] font-bold text-xs">1</span>
+              <div className="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center shrink-0 mt-0.5">
+                <span className="text-black font-bold text-xs">1</span>
               </div>
               <p className="text-gray-600">Ouvrez l'appareil photo de votre téléphone</p>
             </div>
             <div className="flex items-start gap-3 text-sm">
-              <div className="w-6 h-6 bg-blue-100 rounded-full flex items-center justify-center shrink-0 mt-0.5">
-                <span className="text-[#1e40af] font-bold text-xs">2</span>
+              <div className="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center shrink-0 mt-0.5">
+                <span className="text-black font-bold text-xs">2</span>
               </div>
               <p className="text-gray-600">Scannez ce QR code — la caméra scanner s'ouvre automatiquement</p>
             </div>
             <div className="flex items-start gap-3 text-sm">
-              <div className="w-6 h-6 bg-blue-100 rounded-full flex items-center justify-center shrink-0 mt-0.5">
-                <span className="text-[#1e40af] font-bold text-xs">3</span>
+              <div className="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center shrink-0 mt-0.5">
+                <span className="text-black font-bold text-xs">3</span>
               </div>
               <p className="text-gray-600">Présentez le badge employé devant la caméra du téléphone</p>
             </div>
@@ -296,7 +296,7 @@ export const Scanner: React.FC = () => {
             <button
               type="submit"
               disabled={!manualCode.trim()}
-              className="bg-[#1e40af] text-white px-6 py-3 rounded-xl font-medium hover:bg-blue-800 transition-colors disabled:opacity-40"
+              className="bg-[#07bb20] text-white px-6 py-3 rounded-xl font-medium hover:bg-[#069e1b] transition-colors disabled:opacity-40"
             >
               Valider
             </button>

@@ -98,7 +98,7 @@ export const Rapports: React.FC = () => {
 
   const SortIcon = ({ column }: { column: string }) => {
     if (sortConfig?.key !== column) return <ChevronDown className="w-4 h-4 opacity-20 inline ml-1" />;
-    return sortConfig.direction === 'asc' ? <ChevronUp className="w-4 h-4 inline ml-1 text-[#1e40af]" /> : <ChevronDown className="w-4 h-4 inline ml-1 text-[#1e40af]" />;
+    return sortConfig.direction === 'asc' ? <ChevronUp className="w-4 h-4 inline ml-1 text-black" /> : <ChevronDown className="w-4 h-4 inline ml-1 text-black" />;
   };
 
   const totals = data.reduce((acc, curr) => {
@@ -167,13 +167,13 @@ export const Rapports: React.FC = () => {
       {/* Header & Controls */}
       <div className="p-6 bg-white border-b border-gray-200 print:hidden shadow-sm">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
-          <h1 className="text-2xl font-bold text-[#1e40af]">Génération de Rapports</h1>
+          <h1 className="text-2xl font-bold text-black">Génération de Rapports</h1>
           
           <div className="flex gap-3">
             <button onClick={handlePrint} className="flex items-center px-4 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors">
               <Printer className="w-4 h-4 mr-2" /> Imprimer
             </button>
-            <button onClick={handleExport} className="flex items-center px-4 py-2 bg-[#1e40af] text-white rounded-lg text-sm font-medium hover:bg-blue-800 transition-colors">
+            <button onClick={handleExport} className="flex items-center px-4 py-2 bg-[#07bb20] text-white rounded-lg text-sm font-medium hover:bg-[#069e1b] transition-colors">
               <Download className="w-4 h-4 mr-2" /> Exporter Excel
             </button>
           </div>
@@ -205,10 +205,15 @@ export const Rapports: React.FC = () => {
       <div className="p-6 max-w-7xl mx-auto space-y-6 print:p-0">
         
         {/* Print Header */}
-        <div className="hidden print:block mb-8 border-b-2 border-[#1e40af] pb-4">
-          <h1 className="text-3xl font-black text-[#1e40af] tracking-tight uppercase">SAD-International</h1>
-          <h2 className="text-xl font-bold mt-2 text-gray-800">Rapport de présences détaillé</h2>
-          <p className="text-gray-600 font-medium mt-1">Période du {format(new Date(debut), 'dd/MM/yyyy')} au {format(new Date(fin), 'dd/MM/yyyy')}</p>
+        <div className="hidden print:flex mb-8 border-b-2 border-[#07bb20] pb-4 items-center gap-6">
+          <div className="w-24 h-24 bg-white rounded-xl p-2 flex items-center justify-center shrink-0 border border-gray-200">
+            <img src="/logo.png" alt="SAD Logo" className="w-full h-full object-contain" />
+          </div>
+          <div>
+            <h1 className="text-3xl font-black text-black tracking-tight uppercase">SAD-International</h1>
+            <h2 className="text-xl font-bold mt-2 text-gray-800">Rapport de présences détaillé</h2>
+            <p className="text-gray-600 font-medium mt-1">Période du {format(new Date(debut), 'dd/MM/yyyy')} au {format(new Date(fin), 'dd/MM/yyyy')}</p>
+          </div>
         </div>
 
         {/* Charts Section */}
@@ -216,7 +221,7 @@ export const Rapports: React.FC = () => {
           {/* Bar Chart (CSS) */}
           <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex flex-col">
             <h3 className="font-semibold text-gray-800 mb-6 flex items-center">
-              <div className="w-2 h-6 bg-[#1e40af] rounded mr-3"></div>
+              <div className="w-2 h-6 bg-[#07bb20] rounded mr-3"></div>
               Tendance d'activité
             </h3>
             <div className="h-48 flex items-end justify-between gap-3 mt-auto">
@@ -229,10 +234,10 @@ export const Rapports: React.FC = () => {
                 ) : (
                   presencesParJour.map((d, i) => (
                     <div key={i} className="flex-1 flex flex-col items-center gap-2 group">
-                      <span className="text-xs font-bold text-[#1e40af] opacity-0 group-hover:opacity-100 transition">{d.count}</span>
-                      <div className="w-full bg-blue-50 rounded-t-md relative flex-1">
+                      <span className="text-xs font-bold text-black opacity-0 group-hover:opacity-100 transition">{d.count}</span>
+                      <div className="w-full bg-green-50 rounded-t-md relative flex-1">
                         <div
-                          className="absolute bottom-0 w-full bg-[#1e40af] rounded-t-md transition-all duration-700 ease-out group-hover:bg-blue-700"
+                          className="absolute bottom-0 w-full bg-[#07bb20] rounded-t-md transition-all duration-700 ease-out group-hover:bg-blue-700"
                           style={{ height: `${(d.count / maxCount) * 100}%` }}
                         />
                       </div>
@@ -288,21 +293,21 @@ export const Rapports: React.FC = () => {
           <div className="overflow-x-auto">
             <table className="w-full text-left border-collapse">
               <thead>
-                <tr className="bg-[#1e40af] text-white text-xs uppercase tracking-wider print:bg-gray-100 print:text-gray-800">
-                  <th className="px-6 py-4 font-semibold cursor-pointer hover:bg-blue-800 transition-colors print:hover:bg-gray-100" onClick={() => handleSort('nom')}>
+                <tr className="bg-[#07bb20] text-white text-xs uppercase tracking-wider print:bg-gray-100 print:text-gray-800">
+                  <th className="px-6 py-4 font-semibold cursor-pointer hover:bg-[#069e1b] transition-colors print:hover:bg-gray-100" onClick={() => handleSort('nom')}>
                     Employé <SortIcon column="nom" />
                   </th>
                   <th className="px-6 py-4 font-semibold">Département</th>
-                  <th className="px-6 py-4 font-semibold cursor-pointer hover:bg-blue-800 transition-colors print:hover:bg-gray-100" onClick={() => handleSort('jours_presents')}>
+                  <th className="px-6 py-4 font-semibold cursor-pointer hover:bg-[#069e1b] transition-colors print:hover:bg-gray-100" onClick={() => handleSort('jours_presents')}>
                     Jours présents <SortIcon column="jours_presents" />
                   </th>
-                  <th className="px-6 py-4 font-semibold cursor-pointer hover:bg-blue-800 transition-colors" onClick={() => handleSort('jours_absents')}>
+                  <th className="px-6 py-4 font-semibold cursor-pointer hover:bg-[#069e1b] transition-colors" onClick={() => handleSort('jours_absents')}>
                     Jours absents <SortIcon column="jours_absents" />
                   </th>
-                  <th className="px-6 py-4 font-semibold cursor-pointer hover:bg-blue-800 transition-colors print:hover:bg-gray-100" onClick={() => handleSort('retards')}>
+                  <th className="px-6 py-4 font-semibold cursor-pointer hover:bg-[#069e1b] transition-colors print:hover:bg-gray-100" onClick={() => handleSort('retards')}>
                     Retards <SortIcon column="retards" />
                   </th>
-                  <th className="px-6 py-4 font-semibold cursor-pointer hover:bg-blue-800 transition-colors print:hover:bg-gray-100" onClick={() => handleSort('heures_totales')}>
+                  <th className="px-6 py-4 font-semibold cursor-pointer hover:bg-[#069e1b] transition-colors print:hover:bg-gray-100" onClick={() => handleSort('heures_totales')}>
                     Heures totales <SortIcon column="heures_totales" />
                   </th>
                   <th className="px-6 py-4 font-semibold">Moy. H/Jour</th>
@@ -314,7 +319,7 @@ export const Rapports: React.FC = () => {
                     <td colSpan={7} className="px-6 py-12 text-center text-gray-500 font-medium">Chargement des données...</td>
                   </tr>
                 ) : sortedData.map((row, index) => (
-                  <tr key={row.employe.id} className={`${index % 2 === 0 ? 'bg-white' : 'bg-gray-50'} hover:bg-blue-50 transition-colors`}>
+                  <tr key={row.employe.id} className={`${index % 2 === 0 ? 'bg-white' : 'bg-gray-50'} hover:bg-green-50 transition-colors`}>
                     <td className="px-6 py-4 font-medium text-gray-900">{row.employe.prenom} {row.employe.nom}</td>
                     <td className="px-6 py-4 text-gray-600">{row.employe.departement || '-'}</td>
                     <td className="px-6 py-4 text-gray-900 font-medium">{row.jours_presents}</td>
@@ -333,7 +338,7 @@ export const Rapports: React.FC = () => {
                   <td className="px-6 py-5 text-[#16a34a] text-base">{totals.jours_presents}</td>
                   <td className="px-6 py-5 text-red-500 text-base">{data.reduce((acc, row) => acc + (row.jours_absents ?? Math.max(0, totalJoursPeriode - row.jours_presents)), 0)}</td>
                   <td className="px-6 py-5 text-orange-600 text-base">{totals.retards}</td>
-                  <td className="px-6 py-5 text-[#1e40af] text-base">{totals.heures_totales.toFixed(2)}h</td>
+                  <td className="px-6 py-5 text-black text-base">{totals.heures_totales.toFixed(2)}h</td>
                   <td className="px-6 py-5">-</td>
                 </tr>
               </tfoot>
@@ -346,15 +351,8 @@ export const Rapports: React.FC = () => {
       {/* Styles d'impression */}
       <style>{`
         @media print {
-          body * { visibility: hidden; }
-          .min-h-screen, .min-h-screen * { visibility: visible; }
-          .min-h-screen { position: absolute; left: 0; top: 0; width: 100%; background: white !important; }
-          .print\\:hidden { display: none !important; }
-          .print\\:bg-white { background-color: white !important; }
-          .print\\:shadow-none { box-shadow: none !important; }
-          .print\\:border-gray-300 { border-color: #d1d5db !important; }
-          .print\\:p-0 { padding: 0 !important; }
-          .print\\:break-inside-avoid { break-inside: avoid; }
+          @page { margin: 1cm; }
+          body { -webkit-print-color-adjust: exact; print-color-adjust: exact; background-color: white !important; }
         }
       `}</style>
     </div>

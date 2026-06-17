@@ -27,7 +27,7 @@ export const PresenceTable: React.FC<{ data: PresenceData[] }> = ({ data }) => {
   const getInitials = (prenom: string, nom: string) => `${prenom[0] || ''}${nom[0] || ''}`.toUpperCase();
   
   const getAvatarColor = (name: string) => {
-    const colors = ['bg-blue-500', 'bg-green-500', 'bg-purple-500', 'bg-pink-500', 'bg-yellow-500', 'bg-indigo-500'];
+    const colors = ['bg-green-500', 'bg-green-500', 'bg-purple-500', 'bg-pink-500', 'bg-yellow-500', 'bg-indigo-500'];
     let hash = 0;
     for (let i = 0; i < name.length; i++) hash = name.charCodeAt(i) + ((hash << 5) - hash);
     return colors[Math.abs(hash) % colors.length];
@@ -38,7 +38,7 @@ export const PresenceTable: React.FC<{ data: PresenceData[] }> = ({ data }) => {
   return (
     <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
       <div className="p-6 border-b border-gray-100 flex flex-col md:flex-row md:items-center justify-between gap-4">
-        <h3 className="font-semibold text-lg text-[#1e40af]">Présences du jour</h3>
+        <h3 className="font-semibold text-lg text-black">Présences du jour</h3>
         <div className="flex flex-col sm:flex-row gap-3">
           <div className="relative">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4" />
@@ -51,7 +51,7 @@ export const PresenceTable: React.FC<{ data: PresenceData[] }> = ({ data }) => {
             />
           </div>
           <select 
-            className="px-4 py-2 border border-gray-200 rounded-lg text-sm bg-white outline-none focus:border-[#1e40af]"
+            className="px-4 py-2 border border-gray-200 rounded-lg text-sm bg-white outline-none focus:border-[#07bb20]"
             value={filterDept}
             onChange={(e) => setFilterDept(e.target.value)}
           >
@@ -59,7 +59,7 @@ export const PresenceTable: React.FC<{ data: PresenceData[] }> = ({ data }) => {
             {departments.map(d => <option key={d} value={d}>{d}</option>)}
           </select>
           <select 
-            className="px-4 py-2 border border-gray-200 rounded-lg text-sm bg-white outline-none focus:border-[#1e40af]"
+            className="px-4 py-2 border border-gray-200 rounded-lg text-sm bg-white outline-none focus:border-[#07bb20]"
             value={filterStatut}
             onChange={(e) => setFilterStatut(e.target.value)}
           >

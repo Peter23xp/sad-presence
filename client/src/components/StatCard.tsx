@@ -9,7 +9,7 @@ interface StatCardProps {
   colorClass?: string;
 }
 
-export const StatCard: React.FC<StatCardProps> = ({ title, value, icon, trend, trendUp, colorClass = "text-[#1e40af]" }) => {
+export const StatCard: React.FC<StatCardProps> = ({ title, value, icon, trend, trendUp, colorClass = "text-black" }) => {
   return (
     <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex flex-col hover:shadow-md transition-shadow">
       <div className="flex justify-between items-start mb-4">

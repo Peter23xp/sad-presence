@@ -83,7 +83,7 @@ export const Employes: React.FC = () => {
         <div className="fixed inset-0 z-50 bg-black/50 flex items-center justify-center p-4 backdrop-blur-sm">
           <div className="bg-white rounded-2xl shadow-2xl p-6 w-full max-w-4xl max-h-[90vh] overflow-y-auto">
             <div className="flex justify-between items-center mb-6">
-              <h2 className="text-xl font-bold text-[#1e40af]">Importer depuis Excel</h2>
+              <h2 className="text-xl font-bold text-black">Importer depuis Excel</h2>
               <button onClick={() => { setImportOpen(false); fetchEmployes(); }} className="text-gray-400 hover:text-gray-900 transition"><X size={24}/></button>
             </div>
             <ImportExcel />
@@ -152,7 +152,7 @@ export const Employes: React.FC = () => {
               </div>
               <div className="pt-6 mt-6 border-t border-gray-100 flex justify-end gap-3">
                 <button type="button" onClick={() => setModalOpen(false)} className="px-5 py-2.5 font-medium text-gray-700 rounded-lg hover:bg-gray-100 transition">Annuler</button>
-                <button type="submit" className="px-5 py-2.5 font-medium bg-[#1e40af] text-white rounded-lg hover:bg-blue-800 transition shadow-md">Sauvegarder</button>
+                <button type="submit" className="px-5 py-2.5 font-medium bg-[#07bb20] text-white rounded-lg hover:bg-[#069e1b] transition shadow-md">Sauvegarder</button>
               </div>
             </form>
           </div>
@@ -162,7 +162,7 @@ export const Employes: React.FC = () => {
       {/* Header */}
       <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-8 gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-[#1e40af]">Employés</h1>
+          <h1 className="text-2xl font-bold text-black">Employés</h1>
           <p className="text-gray-500 font-medium mt-1">{activeCount} actifs · {inactifCount} inactifs</p>
         </div>
         <div className="flex flex-wrap gap-3">
@@ -175,7 +175,7 @@ export const Employes: React.FC = () => {
           <button onClick={() => setImportOpen(true)} className="flex items-center px-4 py-2 border-2 border-green-600 text-green-700 bg-white rounded-lg hover:bg-green-50 transition font-semibold shadow-sm">
             <Download className="w-4 h-4 mr-2" /> Importer Excel
           </button>
-          <button onClick={() => { setCurrentEmp({ numero_id: '', nom: '', prenom: '', sexe: '', poste: '', departement: '', email: '', telephone: '', localisation: '' }); setModalOpen(true); }} className="flex items-center px-4 py-2 bg-[#1e40af] text-white rounded-lg hover:bg-blue-800 transition font-semibold shadow-md">
+          <button onClick={() => { setCurrentEmp({ numero_id: '', nom: '', prenom: '', sexe: '', poste: '', departement: '', email: '', telephone: '', localisation: '' }); setModalOpen(true); }} className="flex items-center px-4 py-2 bg-[#07bb20] text-white rounded-lg hover:bg-[#069e1b] transition font-semibold shadow-md">
             <Plus className="w-4 h-4 mr-2" /> Ajouter un employé
           </button>
         </div>
@@ -218,7 +218,7 @@ export const Employes: React.FC = () => {
             </thead>
             <tbody className="divide-y divide-gray-100 text-sm">
               {paginated.map(e => (
-                <tr key={e.id} className="hover:bg-blue-50/50 transition-colors">
+                <tr key={e.id} className="hover:bg-green-50/50 transition-colors">
                   <td className="px-6 py-4 font-mono text-gray-500 bg-gray-50/50 w-24 text-center">{e.numero_id}</td>
                   <td className="px-6 py-4 font-semibold text-gray-900">{e.prenom} {e.nom}</td>
                   <td className="px-6 py-4 text-gray-600">{e.poste || '-'}</td>
@@ -238,7 +238,7 @@ export const Employes: React.FC = () => {
                       <button onClick={() => setBarcodeEmp(e)} className="p-2 bg-gray-50 text-gray-600 rounded-md hover:bg-purple-100 hover:text-purple-600 transition" title="Code-barres">
                         <Barcode className="w-4 h-4" />
                       </button>
-                      <button onClick={() => { setCurrentEmp(e); setModalOpen(true); }} className="p-2 bg-gray-50 text-gray-600 rounded-md hover:bg-blue-100 hover:text-[#1e40af] transition" title="Modifier">
+                      <button onClick={() => { setCurrentEmp(e); setModalOpen(true); }} className="p-2 bg-gray-50 text-gray-600 rounded-md hover:bg-green-100 hover:text-black transition" title="Modifier">
                         <Edit2 className="w-4 h-4" />
                       </button>
                       <button onClick={() => toggleStatut(e.id, e.statut)} className={`p-2 bg-gray-50 rounded-md transition ${e.statut === 'actif' ? 'text-gray-600 hover:bg-red-100 hover:text-red-600' : 'text-gray-600 hover:bg-green-100 hover:text-green-600'}`} title={e.statut === 'actif' ? 'Désactiver' : 'Activer'}>
@@ -270,7 +270,7 @@ export const Employes: React.FC = () => {
             <button
               key={i}
               onClick={() => setPage(i + 1)}
-              className={`w-10 h-10 rounded-xl text-sm font-bold transition shadow-sm ${page === i + 1 ? 'bg-[#1e40af] text-white shadow-md' : 'bg-white border border-gray-200 text-gray-600 hover:bg-gray-50 hover:border-gray-300'}`}
+              className={`w-10 h-10 rounded-xl text-sm font-bold transition shadow-sm ${page === i + 1 ? 'bg-[#07bb20] text-white shadow-md' : 'bg-white border border-gray-200 text-gray-600 hover:bg-gray-50 hover:border-gray-300'}`}
             >
               {i + 1}
             </button>

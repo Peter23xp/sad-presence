@@ -44,5 +44,11 @@ export async function authFetch(url: string, options: RequestInit = {}): Promise
   if (optHeaders) {
     Object.assign(headers, optHeaders);
   }
-  return fetch(url, { ...options, headers });
+  const response = await fetch(url, { ...options, headers });
+  if (response.status === 401) {
+    localStorage.removeItem(AUTH_KEY + '_token');
+    localStorage.removeItem(AUTH_KEY + '_user');
+    window.location.href = '/';
+  }
+  return response;
 }

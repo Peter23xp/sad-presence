@@ -121,7 +121,7 @@ export const BarcodeModal: React.FC<BarcodeModalProps> = ({ employe, onClose }) 
         onClick={e => e.stopPropagation()}
       >
         {/* Header */}
-        <div className="bg-[#1e40af] px-6 py-4 flex items-center justify-between">
+        <div className="bg-[#07bb20] px-6 py-4 flex items-center justify-between">
           <div>
             <p className="text-white font-bold text-base">{employe.prenom} {employe.nom}</p>
             <p className="text-blue-200 text-xs mt-0.5">{employe.poste || employe.departement || ''}</p>
@@ -154,7 +154,7 @@ export const BarcodeModal: React.FC<BarcodeModalProps> = ({ employe, onClose }) 
           </button>
           <button
             onClick={handleDownload}
-            className="flex-1 flex items-center justify-center gap-2 py-2.5 bg-[#1e40af] text-white rounded-xl hover:bg-blue-800 transition font-medium text-sm"
+            className="flex-1 flex items-center justify-center gap-2 py-2.5 bg-[#07bb20] text-white rounded-xl hover:bg-[#069e1b] transition font-medium text-sm"
           >
             <Download size={16} />
             Télécharger

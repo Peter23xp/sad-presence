@@ -16,7 +16,7 @@ const ToastContainer = () => {
     <div className="fixed top-4 right-4 z-[9999] space-y-3 pointer-events-none">
       {toasts.map(t => (
         <div key={t.id} className={`px-6 py-4 rounded-xl shadow-2xl text-white font-semibold min-w-[300px] transition-all transform animate-in slide-in-from-right-8 flex items-center ${
-          t.type === 'success' ? 'bg-[#16a34a]' : t.type === 'error' ? 'bg-red-600' : 'bg-[#1e40af]'
+          t.type === 'success' ? 'bg-[#16a34a]' : t.type === 'error' ? 'bg-red-600' : 'bg-[#07bb20]'
         }`}>
           {t.type === 'success' && <span className="mr-3 text-xl">✅</span>}
           {t.type === 'error' && <span className="mr-3 text-xl">❌</span>}
